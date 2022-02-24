@@ -38,7 +38,28 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let end = "";
+    const length = 10; 
+    const pattern = new RegExp(".{1," + length + "}", "ig");
+    let res = expr.match(pattern).map(item => item.padEnd(length, "."));
+    for (let p = 0; p<res.length; p++){
+        let icon = ""
+        let f = res[p]
+        if (f == "**********") {
+            end += " " 
+            continue
+        }
+        for (let r = 0; r<res[p].length; r += 2){
+            if (f[r]+f[r+1] == "10") {
+                icon += '.'
+            }
+            if (f[r]+f[r+1] == "11") {
+                icon += '-'
+            }
+        }
+        end += MORSE_TABLE[icon]
+    }
+    return end
 }
 
 module.exports = {
